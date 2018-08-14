@@ -49,7 +49,6 @@ class ScreenSensor : AwareSensor() {
         const val ACTION_AWARE_TOUCH_SCROLLED_UP = "ACTION_AWARE_TOUCH_SCROLLED_UP"
         const val ACTION_AWARE_TOUCH_SCROLLED_DOWN = "ACTION_AWARE_TOUCH_SCROLLED_DOWN"
 
-
         /**
          * Screen status: OFF = 0
          */
@@ -241,7 +240,6 @@ class ScreenSensor : AwareSensor() {
             }
         }
     }
-
 
     interface ScreenObserver {
         fun onScreenOn()
