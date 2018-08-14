@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.awareframework.android.sensor.screen">
+
+    <application>
+        <service
+            android:name=".ScreenSensor"
+            android:exported="true" />
+
+        <receiver
+            android:name=".ScreenSensor$ScreenSensorBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.aware.android.sensor.screen.SENSOR_START" />
+                <action android:name="com.aware.android.sensor.screen.SENSOR_STOP" />
+                <action android:name="com.aware.android.sensor.SENSOR_START" />
+                <action android:name="com.aware.android.sensor.SENSOR_STOP" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
