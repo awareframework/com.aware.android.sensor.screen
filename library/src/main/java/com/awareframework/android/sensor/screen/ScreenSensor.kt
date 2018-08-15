@@ -221,7 +221,7 @@ class ScreenSensor : AwareSensor() {
 
 
     override fun onSync(intent: Intent?) {
-        TODO("implement")
+        dbEngine?.startSync(ScreenData.TABLE_NAME)
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
