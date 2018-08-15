@@ -227,7 +227,7 @@ class ScreenSensor : AwareSensor() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     data class ScreenConfig(
-            var sensorObserver: ScreenObserver? = null,
+            var sensorObserver: SensorObserver? = null,
             var touchStatus: Boolean = false
     ) : SensorConfig(dbPath = "aware_screen") {
 
@@ -241,7 +241,7 @@ class ScreenSensor : AwareSensor() {
         }
     }
 
-    interface ScreenObserver {
+    interface SensorObserver {
         fun onScreenOn()
         fun onScreenOff()
         fun onScreenLocked()

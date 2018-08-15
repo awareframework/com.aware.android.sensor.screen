@@ -19,7 +19,7 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getTargetContext()
 
         ScreenSensor.startService(appContext, ScreenSensor.ScreenConfig().apply {
-            sensorObserver = object : ScreenSensor.ScreenObserver {
+            sensorObserver = object : ScreenSensor.SensorObserver {
                 override fun onScreenOn() {
                     // your code here...
                 }
