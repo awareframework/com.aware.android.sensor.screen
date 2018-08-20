@@ -22,7 +22,7 @@ import com.awareframework.android.sensor.screen.model.ScreenData
 class ScreenSensor : AwareSensor() {
 
     companion object {
-        const val TAG = "AWAREScreenSensor"
+        const val TAG = "AWARE::Screen"
 
         /**
          * Broadcasted event: screen is on
