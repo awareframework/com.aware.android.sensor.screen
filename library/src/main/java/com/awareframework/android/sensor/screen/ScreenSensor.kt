@@ -77,15 +77,15 @@ class ScreenSensor : AwareSensor() {
 
         const val ACTION_AWARE_SCREEN_SYNC = "com.awareframework.android.sensor.screen.SENSOR_SYNC"
 
-        val CONFIG = ScreenConfig()
+        val CONFIG = Config()
 
-        fun startService(context: Context, config: ScreenConfig? = null) {
+        fun start(context: Context, config: Config? = null) {
             if (config != null)
                 CONFIG.replaceWith(config)
             context.startService(Intent(context, ScreenSensor::class.java))
         }
 
-        fun stopService(context: Context) {
+        fun stop(context: Context) {
             context.stopService(Intent(context, ScreenSensor::class.java))
         }
     }
@@ -226,22 +226,22 @@ class ScreenSensor : AwareSensor() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    data class ScreenConfig(
-            var sensorObserver: SensorObserver? = null,
+    data class Config(
+            var sensorObserver: Observer? = null,
             var touchStatus: Boolean = false
     ) : SensorConfig(dbPath = "aware_screen") {
 
         override fun <T : SensorConfig> replaceWith(config: T) {
             super.replaceWith(config)
 
-            if (config is ScreenConfig) {
+            if (config is Config) {
                 sensorObserver = config.sensorObserver
                 touchStatus = config.touchStatus
             }
         }
     }
 
-    interface SensorObserver {
+    interface Observer {
         fun onScreenOn()
         fun onScreenOff()
         fun onScreenLocked()
@@ -260,18 +260,18 @@ class ScreenSensor : AwareSensor() {
                     logd("Sensor enabled: " + CONFIG.enabled)
 
                     if (CONFIG.enabled) {
-                        startService(context)
+                        start(context)
                     }
                 }
 
                 ACTION_AWARE_SCREEN_STOP,
                 SENSOR_STOP_ALL -> {
                     logd("Stopping sensor.")
-                    stopService(context)
+                    stop(context)
                 }
 
                 ACTION_AWARE_SCREEN_START -> {
-                    startService(context)
+                    start(context)
                 }
             }
         }

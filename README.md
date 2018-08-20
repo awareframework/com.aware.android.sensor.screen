@@ -8,23 +8,24 @@ The screen sensor monitors the screen statuses, such as turning on and off, lock
 
 ### ScreenSensor
 
-+ `startService(context: Context, config: ScreenConfig?)`: Starts the screen sensor with the optional configuration.
-+ `stopService(context: Context)`: Stops the service.
++ `start(context: Context, config: ScreenSensor.Config?)`: Starts the screen sensor with the optional configuration.
++ `stop(context: Context)`: Stops the service.
 
-### ScreenConfig
+### ScreenSensor.Config
 
 Class to hold the configuration of the sensor.
 
 #### Fields
 
-+ `debug: Boolean`: enable/disable logging to `Logcat`. (default = false)
-+ `host: String`: Host for syncing the database. (default = null)
-+ `key: String`: Encryption key for the database. (default = no encryption)
-+ `host: String`: Host for syncing the database. (default = null)
-+ `type: EngineDatabaseType`: Which db engine to use for saving data. (default = NONE)
-+ `path: String`: Path of the database.
-+ `deviceId: String`: Id of the device that will be associated with the events and the sensor. (default = "")
-+ `sensorObserver: ScreenObserver`: Callback for live data updates.
++ `sensorObserver: ScreenSensor.Observer`: Callback for live data updates.
++ `enabled: Boolean` Sensor is enabled or not. (default = false)
++ `debug: Boolean` enable/disable logging to `Logcat`. (default = false)
++ `label: String` Label for the data. (default = "")
++ `deviceId: String` Id of the device that will be associated with the events and the sensor. (default = "")
++ `dbEncryptionKey` Encryption key for the database. (default =String? = null)
++ `dbType: Engine` Which db engine to use for saving data. (default = `Engine.DatabaseType.NONE`)
++ `dbPath: String` Path of the database. (default = "aware_wifi")
++ `dbHost: String` Host for syncing the database. (Defult = `null`)
 
 ## Broadcasts
 
@@ -43,6 +44,7 @@ Contains the screen profiles.
 | ------------ | ------ | ---------------------------------------------------------------------- |
 | screenStatus | Int    | screen status, one of the following: 0=off, 1=on, 2=locked, 3=unlocked |
 | deviceId     | String | AWARE device UUID                                                      |
+| label        | String | Customizable label. Useful for data calibration or traceability        |
 | timestamp    | Long   | unixtime milliseconds since 1970                                       |
 | timezone     | Int    | [Raw timezone offset][1] of the device                                 |
 | os           | String | Operating system of the device (ex. android)                           |
@@ -51,8 +53,8 @@ Contains the screen profiles.
 
 ```kotlin
 // To start the service.
-ScreenSensor.startService(appContext, ScreenSensor.ScreenConfig().apply {
-    sensorObserver = object : ScreenSensor.ScreenObserver {
+ScreenSensor.start(appContext, ScreenSensor.Config().apply {
+    sensorObserver = object : ScreenSensor.Observer {
         override fun onScreenOn() {
             // your code here...
         }
@@ -75,7 +77,7 @@ ScreenSensor.startService(appContext, ScreenSensor.ScreenConfig().apply {
 })
 
 // To stop the service
-ScreenSensor.stopService(appContext)
+ScreenSensor.stop(appContext)
 ```
 
 ## License
